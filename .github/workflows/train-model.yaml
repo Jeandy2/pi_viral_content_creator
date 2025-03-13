@@ -1,0 +1,39 @@
+name: Train text2tag model pipeline
+
+on:
+  workflow_dispatch:  # manual triggering
+
+jobs:
+  load_data:
+    name: Load Data
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "load data"
+
+  load_model:
+    name: Load Model
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "load model"
+
+  finetune:
+    name: Fine-tune Model
+    runs-on: ubuntu-latest
+    needs: [load_data, load_model]
+    steps:
+      - run: echo "finetune model"
+
+  evaluate:
+    name: Evaluate Model
+    runs-on: ubuntu-latest
+    needs: finetune
+    steps:
+      - run: echo "evaluate model"
+
+  package:
+    name: Package Model
+    runs-on: ubuntu-latest
+    needs: evaluate
+    environment: model_review
+    steps:
+      - run: echo "package"
